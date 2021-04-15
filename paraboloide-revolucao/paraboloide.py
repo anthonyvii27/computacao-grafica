@@ -21,18 +21,18 @@ def f(i,j):
 
 def mesh():
     glPushMatrix()
-    glRotatef(a,1.0,0.0,0.0)
+    glRotatef(a,1.0,1.0,0.0)
     
     for i in range(round(n1/2)):
         glBegin(GL_QUAD_STRIP)
         
         for j in range(n2):
-            glColor3fv(((1.0*i/(n1-1)), 0, 1 - (1.0*i/(n1-1))))
+            glColor3fv(((1.0 * (i + 1) / (n1 - 1)), 0, 1.0 - (1.0 * (i + 1) / (n1 - 1))))
             x, y, z = f(i,j)
             glVertex3f(x,y,z)
             
-            glColor3fv(((1.0*(i+1)/(n1-1)), 0, 1 - (1.0*(i+1)/(n1-1))))
-            x, y, z = f(i+1, j)
+            glColor3fv(((1.0 * (i + 1) / (n1 - 1)), 0, 1.0 - (1.0 * (i + 1) / (n1 - 1))))
+            x, y, z = f(i + 1, j)
             glVertex3f(x,y,z)
 
         glEnd()
@@ -53,7 +53,7 @@ def timer(i):
 glutInit(sys.argv)
 glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_MULTISAMPLE)
 glutInitWindowSize(1024,1024)
-glutCreateWindow("Nuvem De Pontos")
+glutCreateWindow("Paraboloide Revolucao")
 glutDisplayFunc(desenha)
 glEnable(GL_MULTISAMPLE)
 glEnable(GL_DEPTH_TEST)
