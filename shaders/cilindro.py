@@ -6,17 +6,17 @@ import math
 
 a = 0
 
-cores = ((0,0,1), (1,1,0), (1,0,0), (1,1,0), (1,0,0), (1,1,0), (1,0,0), (0,0,1))
+cores = ((0,0,1), (1,0,0), (1,1,0))
 
-def prisma(raioInferior, raioSuperior):
+def cilindro(raioInferior, raioSuperior):
     pontosBaseSuperior = []
     pontosBaseInferior = []
-    N = 6
+    N = 100
     H = 2
     angulo = (2*math.pi)/N
 
     glPushMatrix()
-    glTranslatef(0,0,0)
+    glTranslatef(0,-1,0)
     glRotatef(a,0.0,1.0,0.0)
     glRotatef(-110,1.0,0.0,0.0)
     glColor3fv(cores[0])
@@ -39,7 +39,7 @@ def prisma(raioInferior, raioSuperior):
         glVertex3f(x,y,H)
     glEnd()
 
-    # Lados do prisma
+    # Laterais do cilindro
     for i in range(0,N):
         glBegin(GL_QUADS)
         glColor3fv(cores[(i+1)%len(cores)])
@@ -55,7 +55,7 @@ def desenha():
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
     glPushMatrix()
     glRotatef(a,0,1,0)
-    prisma(3,2) 
+    cilindro(1,1)
     glPopMatrix()
     a+=1
     glutSwapBuffers()
