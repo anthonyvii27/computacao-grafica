@@ -2,23 +2,8 @@ from OpenGL.GLUT import *
 from OpenGL.GLU import *
 from OpenGL.GL import *
 import sys
-
-from math import pi, cos, sin
  
 a = 0
-n1 = 50
-n2 = 50
-r = 1.5
-
-def f(i,j):
-    theta = ((pi * i) / (n1 -1)) - (pi / 2)
-    phi = 2 * pi * j / (n2 - 1)
-
-    x = r * cos(theta) * cos(phi)
-    y = r * sin(theta)
-    z = r * cos(theta) * sin(phi)
-
-    return x, y**2, z
 
 def piramide():
     glPushMatrix()
