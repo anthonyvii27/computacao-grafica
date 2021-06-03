@@ -1,12 +1,13 @@
 from OpenGL.GLUT import *
 from OpenGL.GLU import *
 from OpenGL.GL import *
+from math import *
+import math 
 import sys
-import math
+import random
 
 a = 0
-
-cores = ((0,0,1), (1,0,0), (1,1,0))
+dist = 2
 
 def cilindro(raioInferior, raioSuperior):
     pontosBaseSuperior = []
@@ -19,9 +20,8 @@ def cilindro(raioInferior, raioSuperior):
     glTranslatef(0,-1,0)
     glRotatef(a,0.0,1.0,0.0)
     glRotatef(-110,1.0,0.0,0.0)
-    glColor3fv(cores[0])
 
-    # Base Inferior
+	# Base Inferior
     glBegin(GL_POLYGON)
     for i in range(0,N):
         x = raioInferior * math.cos(i*angulo)
@@ -42,13 +42,26 @@ def cilindro(raioInferior, raioSuperior):
     # Laterais do cilindro
     for i in range(0,N):
         glBegin(GL_QUADS)
-        glColor3fv(cores[(i+1)%len(cores)])
+        glNormal3fv(calculaNormal( (pontosBaseInferior[i][0],pontosBaseInferior[i][1],0.0), (-dist,-dist,H), (pontosBaseInferior[(i+1)%N][0],pontosBaseInferior[(i+1)%N][1],0.0)))
         glVertex3f(pontosBaseInferior[i][0],pontosBaseInferior[i][1],0.0)
         glVertex3f(pontosBaseInferior[(i+1)%N][0],pontosBaseInferior[(i+1)%N][1],0.0)
         glVertex3f(pontosBaseSuperior[(i+1)%N][0],pontosBaseSuperior[(i+1)%N][1],H)
         glVertex3f(pontosBaseSuperior[i][0],pontosBaseSuperior[i][1],H)
         glEnd()
     glPopMatrix()
+
+def calculaNormal(a, b, c):
+    x = 0
+    y = 1
+    z = 2
+    v0 = a
+    v1 = b
+    v2 = c
+    U = ( v2[x]-v0[x], v2[y]-v0[y], v2[z]-v0[z] )
+    V = ( v1[x]-v0[x], v1[y]-v0[y], v1[z]-v0[z] )
+    N = ( (U[y]*V[z]-U[z]*V[y]),(U[z]*V[x]-U[x]*V[z]),(U[x]*V[y]-U[y]*V[x]))
+    NLength = sqrt(N[x]*N[x]+N[y]*N[y]+N[z]*N[z])
+    return ( N[x]/NLength, N[y]/NLength, N[z]/NLength)
 
 def desenha():
     global a
@@ -96,7 +109,7 @@ def main():
 	glutInit(sys.argv)
 	glutInitDisplayMode(GLUT_DOUBLE | GLUT_RGBA | GLUT_DEPTH | GLUT_MULTISAMPLE)
 	glutInitWindowSize(800,600)
-	glutCreateWindow("Shader - Revolucao")
+	glutCreateWindow("Shader - Cilindro")
 	init()
 	glutReshapeFunc(reshape)
 	glutDisplayFunc(desenha)
