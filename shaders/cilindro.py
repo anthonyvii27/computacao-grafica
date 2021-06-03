@@ -4,7 +4,6 @@ from OpenGL.GL import *
 from math import *
 import math 
 import sys
-import random
 
 a = 0
 dist = 2
